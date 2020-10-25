@@ -7,6 +7,8 @@ const InputComponent = ({
   onUpdateInput,
   width = "317px",
   height = "52px",
+  placeholder = "",
+  type = "input",
 }) => {
   return (
     <StyledInputComponent width={width} height={height}>
@@ -16,6 +18,8 @@ const InputComponent = ({
           className="input__field"
           value={value}
           onChange={({ target }) => onUpdateInput(target.value)}
+          placeholder={placeholder}
+          type={type}
         />
       </div>
     </StyledInputComponent>
