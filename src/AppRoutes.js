@@ -5,11 +5,19 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import routes from "./constants/routesConstants";
 
 function AppRoutes() {
   return (
     <Router>
-      <Switch></Switch>
+      <Switch>
+        <Route path={routes.homePage}></Route>
+        <Route path={routes.register}></Route>
+        <Route path={routes.yourData}></Route>
+        <Route path={routes.successfulIdentify}></Route>
+        <Route path={routes.identify}></Route>
+        <Redirect to={routes.homePage}></Redirect>
+      </Switch>
     </Router>
   );
 }
