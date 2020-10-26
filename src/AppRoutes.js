@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import routes from "./constants/routesConstants";
 import Homepage from "./pages/Homepage/Homepage";
+import Identity from "./pages/Identify/Identify";
 import Register from "./pages/Register/Register";
 
 function AppRoutes() {
@@ -19,9 +20,11 @@ function AppRoutes() {
         <Route path={routes.homePage}>
           <Homepage />
         </Route>
+        <Route path={routes.identify}>
+          <Identity />
+        </Route>
         <Route path={routes.yourData}></Route>
         <Route path={routes.successfulIdentify}></Route>
-        <Route path={routes.identify}></Route>
         <Redirect to={routes.homePage}></Redirect>
       </Switch>
     </Router>

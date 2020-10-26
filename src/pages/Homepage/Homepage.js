@@ -7,11 +7,14 @@ import yourDataIcon from "../../assets/images/yourDataIcon.svg";
 
 import logoutIcon from "../../assets/images/logoutIcon.svg";
 import notificationsIcon from "../../assets/images/notificationsIcon.svg";
+import { useHistory } from "react-router-dom";
+import routes from "../../constants/routesConstants";
 
 const Homepage = () => {
   // todo: update when the API will be implemented.
 
   const [name, setName] = useState("Andrei");
+  const history = useHistory();
 
   return (
     <StyledHomepage>
@@ -21,7 +24,10 @@ const Homepage = () => {
           <div className="homepage-title__name">{name}</div>
         </div>
 
-        <div className="homepage__card">
+        <div
+          className="homepage__card"
+          onClick={() => history.push(routes.identify)}
+        >
           <CardComponent
             badgeImg={identifyIcon}
             text={"Identify"}
@@ -29,7 +35,10 @@ const Homepage = () => {
           ></CardComponent>
         </div>
 
-        <div className="homepage__card">
+        <div
+          className="homepage__card"
+          onClick={() => history.push(routes.yourData)}
+        >
           <CardComponent
             badgeImg={yourDataIcon}
             text={"Your data"}
