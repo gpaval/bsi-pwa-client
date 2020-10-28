@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import StyledIdentity from "./StyledIdentity";
 import QrReader from "react-qr-reader";
+import BackComponent from "../../components/BackComponent/BackComponent";
+import { useHistory } from "react-router-dom";
 
 const Identity = () => {
-  // todo: update when the API will be implemented.
+  const [data, setData] = useState("none");
+  const [err, setErr] = useState("none");
 
-  const handleScan = (data) => {
-    if (data) {
-      console.log(data);
-    }
-  };
+  const handleScan = (data) => data && setData(data);
+  const handleError = (err) => setErr(err.message);
 
-  const handleError = (err) => {
-    console.error(err);
-  };
-
+  const history = useHistory();
   return (
-    <StyledIdentity>
-      <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
-        style={{ width: "30%" }}
-      />
-    </StyledIdentity>
+    <>
+      <BackComponent onClick={() => history.goBack()} />
+      <StyledIdentity>
+        <div className="identity">
+          <div className="identity__title">
+            Please scan the QR code to identify yourself.
+          </div>
+          <QrReader
+            delay={300}
+            onError={handleError}
+            onScan={handleScan}
+            style={{ width: "300px", width: "300px" }}
+          />
+        </div>
+      </StyledIdentity>
+    </>
   );
 };
 
