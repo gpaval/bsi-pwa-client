@@ -26,6 +26,8 @@ const Identity = () => {
             onScan={handleScan}
             style={{ width: "300px", width: "300px" }}
           />
+          {data && <div>{data}</div>}
+          {err && <div>{err}</div>}
         </div>
       </StyledIdentity>
     </>

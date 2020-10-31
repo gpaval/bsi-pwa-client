@@ -10,7 +10,7 @@ const StyledIdentity = styled.div`
       font-weight: 400;
       line-height: 18px;
 
-      margin-top: 150px;
+      margin-top: 100px;
       margin-bottom: 55px;
     }
   }
