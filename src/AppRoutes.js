@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import routes from "./constants/routesConstants";
 import Homepage from "./pages/Homepage/Homepage";
+import Identity from "./pages/Identify/Identify";
 import Register from "./pages/Register/Register";
 import Successfully from "./pages/Successfully/Successfully";
 import Yourdata from "./pages/Yourdata/Yourdata";
@@ -21,11 +22,15 @@ function AppRoutes() {
         <Route path={routes.homePage}>
           <Homepage />
         </Route>
-        <Route path={routes.yourData}> <Yourdata/></Route>
-        <Route path={routes.successfulIdentify}>
-          <Successfully/>
+        <Route path={routes.yourData}>
+          <Yourdata />
         </Route>
-        <Route path={routes.identify}></Route>
+        <Route path={routes.successfulIdentify}>
+          <Successfully />
+        </Route>
+        <Route path={routes.identify}>
+          <Identity />
+        </Route>
         <Redirect to={routes.homePage}></Redirect>
       </Switch>
     </Router>
