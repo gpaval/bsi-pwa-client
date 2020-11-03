@@ -9,6 +9,8 @@ import routes from "./constants/routesConstants";
 import Homepage from "./pages/Homepage/Homepage";
 import Identity from "./pages/Identify/Identify";
 import Register from "./pages/Register/Register";
+import Successfully from "./pages/Successfully/Successfully";
+import Yourdata from "./pages/Yourdata/Yourdata";
 
 function AppRoutes() {
   return (
@@ -20,11 +22,15 @@ function AppRoutes() {
         <Route path={routes.homePage}>
           <Homepage />
         </Route>
+        <Route path={routes.yourData}>
+          <Yourdata />
+        </Route>
+        <Route path={routes.successfulIdentify}>
+          <Successfully />
+        </Route>
         <Route path={routes.identify}>
           <Identity />
         </Route>
-        <Route path={routes.yourData}></Route>
-        <Route path={routes.successfulIdentify}></Route>
         <Redirect to={routes.homePage}></Redirect>
       </Switch>
     </Router>
