@@ -10,7 +10,7 @@ const StyledSuccessfully = styled.div`
       display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-top: 100px;
+      margin-top: 110px;
     }
     &__message {
       margin-top: 60px;
