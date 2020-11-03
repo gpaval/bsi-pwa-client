@@ -3,7 +3,7 @@ import colors from "../../constants/themingConstants";
 
 const StyledYourdata = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   margin-left: 30px;
   margin-top: 110px;
   .yourdata {
