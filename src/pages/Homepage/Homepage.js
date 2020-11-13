@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import StyledHomepage from "./StyledHomepage";
 
@@ -9,12 +9,20 @@ import logoutIcon from "../../assets/images/logoutIcon.svg";
 import notificationsIcon from "../../assets/images/notificationsIcon.svg";
 import { useHistory } from "react-router-dom";
 import routes from "../../constants/routesConstants";
+import { Auth } from "aws-amplify";
 
 const Homepage = () => {
   // todo: update when the API will be implemented.
 
   const [name, setName] = useState("Andrei");
   const history = useHistory();
+
+  useEffect(() => {
+    (async function setUsername() {
+      const { username } = await Auth.currentAuthenticatedUser();
+      setName(username);
+    })();
+  }, []);
 
   return (
     <StyledHomepage>
@@ -47,21 +55,19 @@ const Homepage = () => {
         </div>
 
         <div className="homepage__footer">
-          <div className="homepage--footer">
+          <div
+            className="homepage--footer"
+            onClick={() => {
+              Auth.signOut();
+              history.push(routes.register);
+            }}
+          >
             <img
               src={logoutIcon}
               className="homepage--footer__logo"
               alt="Log out"
             />
             <div className="homepage--footer__title">Log-out</div>
-          </div>
-          <div className="homepage--footer">
-            <img
-              src={notificationsIcon}
-              className="homepage--footer__logo"
-              alt="Log out"
-            />
-            <div className="homepage--footer__title">Notifications</div>
           </div>
         </div>
       </div>

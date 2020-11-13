@@ -7,15 +7,27 @@ import RegisterIcon from "../../assets/images/registerIcon.svg";
 import { useHistory } from "react-router-dom";
 import routes from "../../constants/routesConstants";
 
+import { Auth } from "aws-amplify";
+
 const Register = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const [loading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {
-    // server call
-    console.log(id, password);
-    history.push(routes.homePage);
+  const handleSubmit = async () => {
+    setIsLoading(true);
+
+    try {
+      const user = await Auth.signIn(id, password);
+      if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
+        await Auth.completeNewPassword(user, password);
+      }
+      history.push(routes.homePage);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
   };
 
   return (
@@ -49,6 +61,7 @@ const Register = () => {
             <ButtonComponent
               text="Submit"
               onClick={handleSubmit}
+              isLoading={loading}
             ></ButtonComponent>
           </div>
         </div>

@@ -11,6 +11,13 @@ const StyledButtonComponent = styled.button`
   color: ${colors.white};
   font-weight: 700;
   line-height: 21px;
+  outline: none;
+
+  .loader {
+    width: 38px;
+    height: 35px;
+    margin-top: 7px;
+  }
 `;
 
 export default StyledButtonComponent;
