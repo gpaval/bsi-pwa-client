@@ -29,6 +29,11 @@ const StyledRegister = styled.div`
 
         margin-top: 58px;
       }
+
+      &__message {
+        color: red;
+        margin-top: 10px;
+      }
     }
   }
 `;

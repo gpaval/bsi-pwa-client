@@ -14,10 +14,11 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const history = useHistory();
   const [loading, setIsLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
 
   const handleSubmit = async () => {
     setIsLoading(true);
-
+    setErrMessage("");
     try {
       const user = await Auth.signIn(id, password);
       if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
@@ -27,6 +28,7 @@ const Register = () => {
     } catch (err) {
       setIsLoading(false);
       console.log(err);
+      setErrMessage(err.message);
     }
   };
 
@@ -57,6 +59,9 @@ const Register = () => {
               type={"password"}
             />
           </div>
+          {errMessage && (
+            <div className="register-form__message">{errMessage}</div>
+          )}
           <div className="register-form__button">
             <ButtonComponent
               text="Submit"
