@@ -8,7 +8,15 @@ const Identity = () => {
   const [data, setData] = useState("none");
   const [err, setErr] = useState("none");
 
-  const handleScan = (data) => data && setData(data);
+  const handleScan = (data) => {
+    try {
+      const decodedData = JSON.parse(data);
+      // todo: send data to the server
+      data && setData(data);
+    } catch (err) {
+      setErr("Invalid token!");
+    }
+  };
   const handleError = (err) => setErr(err.message);
 
   const history = useHistory();
