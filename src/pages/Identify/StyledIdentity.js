@@ -14,6 +14,12 @@ const StyledIdentity = styled.div`
       margin-bottom: 55px;
     }
   }
+  .loader {
+    background: #ff4834;
+    padding: 20px;
+    display: block;
+    margin: auto;
+  }
 `;
 
 export default StyledIdentity;
