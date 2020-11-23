@@ -18,6 +18,13 @@ const StyledButtonComponent = styled.button`
     height: 35px;
     margin-top: 7px;
   }
+
+  ${(props) =>
+    props.type === "white" &&
+    `
+    border: 1px solid black;
+    color: black;
+  `}
 `;
 
 export default StyledButtonComponent;

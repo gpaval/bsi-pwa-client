@@ -19,8 +19,12 @@ const Homepage = () => {
 
   useEffect(() => {
     (async function setUsername() {
-      const { username } = await Auth.currentAuthenticatedUser();
-      setName(username);
+      try {
+        const { username } = await Auth.currentAuthenticatedUser();
+        setName(username);
+      } catch (err) {
+        if (err === "not authenticated") history.push(routes.register);
+      }
     })();
   }, []);
 

@@ -8,6 +8,9 @@ function getBackgroundByType(type) {
   if (type === "primary") {
     return colors.mainOrange;
   }
+  if (type === "white") {
+    return "white";
+  }
 }
 
 const ButtonComponent = ({
@@ -24,6 +27,7 @@ const ButtonComponent = ({
       height={height}
       background={getBackgroundByType(type)}
       onClick={onClick}
+      type={type}
     >
       <>
         {(isLoading && <img className="loader" src={loader} />) || <>{text}</>}

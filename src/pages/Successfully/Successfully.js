@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import successfullyIcon from "../../assets/images/successfullyIcon.svg";
 import BackComponent from "../../components/BackComponent/BackComponent";
@@ -8,7 +8,7 @@ import StyledSuccessfully from "./StyledSuccessfully";
 const Successfully = () => {
   // todo: update when the API will be implemented.
 
-  const [name, setName] = useState("Popescu Ion");
+  const location = useLocation();
   const history = useHistory();
 
   return (
@@ -20,7 +20,7 @@ const Successfully = () => {
           <div className="successfully__message">
             You have been successfully identified
           </div>
-          <div className="successfully__info">Medic stomatolog {name}</div>
+          <div className="successfully__info">{location.state.name}</div>
         </div>
       </StyledSuccessfully>
     </>
