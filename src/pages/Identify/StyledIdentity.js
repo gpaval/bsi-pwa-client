@@ -20,6 +20,10 @@ const StyledIdentity = styled.div`
     display: block;
     margin: auto;
   }
+
+  .modal-content {
+    max-width: 365px;
+  }
 `;
 
 export default StyledIdentity;
