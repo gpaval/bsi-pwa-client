@@ -25,6 +25,8 @@ const Identity = () => {
   const [isCallingServer, setIsCallingServer] = useState(false);
   const [serviceTitle, setServiceTitle] = useState("");
   const [decodedData, setDecodedData] = useState({});
+  const [optionalPermissions, setOptionalPermissions] = useState([]);
+  const [requiredPermissions, setRequiredPermissions] = useState([]);
 
   const handleScan = (data) => {
     try {
@@ -36,6 +38,17 @@ const Identity = () => {
         decodedData.connectionId !== ""
       ) {
         setDecodedData(decodedData);
+        const optionalPermissions = (
+          decodedData?.requiredKeys[0]?.optionalPermissions || []
+        ).map((permission) => ({
+          permission,
+          isSelected: true,
+        }));
+        const requiredPermissions =
+          decodedData?.requiredKeys[0]?.requiredPermissions;
+        setOptionalPermissions(optionalPermissions);
+        setRequiredPermissions(requiredPermissions);
+
         data && setData(data);
       }
     } catch (err) {
@@ -50,11 +63,15 @@ const Identity = () => {
   const onAllow = () => {
     Auth.currentAuthenticatedUser().then((user) => {
       const { email } = user.attributes;
+      const optionalPermissionsLocal = optionalPermissions
+        .filter((el) => el.isSelected)
+        .map(({ permission }) => permission);
+
       client.send(
         JSON.stringify({
           email,
           connectionId: decodedData.connectionId,
-          requiredKeys: decodedData.requiredKeys,
+          requiredKeys: [...requiredPermissions, ...optionalPermissionsLocal],
           type: TYPES.registering,
           device: "mobile",
         })
@@ -65,6 +82,19 @@ const Identity = () => {
         state: { name: decodedData.name },
       });
     });
+  };
+
+  const toggleItem = (toggledPermissionKey) => {
+    const permissionsCopy = [...optionalPermissions];
+    const indexOfPermission = optionalPermissions.findIndex(
+      ({ permission }) => toggledPermissionKey === permission
+    );
+
+    permissionsCopy[indexOfPermission].isSelected = !permissionsCopy[
+      indexOfPermission
+    ].isSelected;
+
+    setOptionalPermissions(permissionsCopy);
   };
 
   const handleError = (err) => setErr(err.message);
@@ -87,36 +117,59 @@ const Identity = () => {
         <Modal show={Object.keys(decodedData).length > 0}>
           <Modal.Header closeButton onClick={onCancel} />
 
-          <Modal.Body>
-            <img src={lockIcon} alt="Lock" className="modal__icon" />
+          {Object.keys(decodedData).length > 0 && (
+            <Modal.Body>
+              <img src={lockIcon} alt="Lock" className="modal__icon" />
 
-            <div className="modal-content__title">
-              <b>{decodedData.name}</b> wants to receive access to the following
-              data:
-            </div>
+              <div className="modal-content__title">
+                <b>{decodedData.name}</b> wants to receive access to the
+                following data:
+              </div>
 
-            <div className="modal-content">
-              {(decodedData.requiredKeys || []).map((key) => (
-                <div className="modal-content__text">{key}</div>
-              ))}
-            </div>
+              <div className="modal-content">
+                {(requiredPermissions || []).map((key) => (
+                  <div className="modal-content-field">
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      disabled={true}
+                      className="modal-content-field__checkbox"
+                    />
+                    <div className="modal-content__text">{key}</div>
+                  </div>
+                ))}
+                {(optionalPermissions || []).map((key) => (
+                  <div
+                    className="modal-content-field"
+                    onClick={() => toggleItem(key.permission)}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={key.isSelected}
+                      className="modal-content-field__checkbox"
+                    />
+                    <div className="modal-content__text">{key.permission}</div>
+                  </div>
+                ))}
+              </div>
 
-            <div className="modal-buttons">
-              <ButtonComponent
-                width="116px"
-                height="52px"
-                type="white"
-                text={"Cancel"}
-                onClick={onCancel}
-              />
-              <ButtonComponent
-                width="116px"
-                height="52px"
-                text={"Allow"}
-                onClick={onAllow}
-              />
-            </div>
-          </Modal.Body>
+              <div className="modal-buttons">
+                <ButtonComponent
+                  width="116px"
+                  height="52px"
+                  type="white"
+                  text={"Cancel"}
+                  onClick={onCancel}
+                />
+                <ButtonComponent
+                  width="116px"
+                  height="52px"
+                  text={"Allow"}
+                  onClick={onAllow}
+                />
+              </div>
+            </Modal.Body>
+          )}
         </Modal>
 
         <div className="identity">
